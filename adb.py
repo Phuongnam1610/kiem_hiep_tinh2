@@ -77,17 +77,17 @@ def auth(key):
         # }
         #banmoi
         license_keys = {
-            "hsr": datetime.date(2025, 7, 13),
-            "qqq": datetime.date(2025, 9, 15),    # 35 days from July 13
-            "ưgj": datetime.date(2025, 9, 21),    # 35 days from Aug 17 
-            "h54": datetime.date(2025, 10, 26),   # 35 days from Sept 21
-            "oip": datetime.date(2025, 11, 30),   # 35 days from Oct 26
-            "4th": datetime.date(2026, 1, 4),     # 35 days from Nov 30
-            "vbn": datetime.date(2026, 2, 8),     # 35 days from Jan 4
-            "xzx": datetime.date(2026, 3, 15),    # 35 days from Feb 8
-            "ert": datetime.date(2026, 4, 19),    # 35 days from Mar 15
-            "q23": datetime.date(2026, 5, 24),    # 35 days from Apr 19
-            "poi": datetime.date(2026, 6, 28)     # 35 days from May 24
+            "hsr": datetime.date(2025, 11, 22),   # 30 days from Oct 23, 2025
+            "qqq": datetime.date(2025, 11, 27),   # 30 days from Oct 28, 2025
+            "ưgj": datetime.date(2025, 10, 21),   # 30 days from Sep 21, 2025
+            "h54": datetime.date(2025, 11, 25),   # 30 days from Oct 26, 2025
+            "oip": datetime.date(2025, 12, 30),   # 30 days from Nov 30, 2025
+            "4th": datetime.date(2026, 2, 3),     # 30 days from Jan 4, 2026
+            "vbn": datetime.date(2026, 3, 10),    # 30 days from Feb 8, 2026
+            "xzx": datetime.date(2026, 4, 14),    # 30 days from Mar 15, 2026
+            "ert": datetime.date(2026, 5, 19),    # 30 days from Apr 19, 2026
+            "q23": datetime.date(2026, 6, 23),    # 30 days from May 24, 2026
+            "poi": datetime.date(2026, 7, 28)     # 30 days from June 28, 2026
         }
         #Cam2
         # license_keys = {
@@ -235,7 +235,7 @@ def click(udid,x,y,Tag="None"):
 
     command = f"{adb} -s {udid} shell input tap {x} {y}"
     os.system(command)
-    time.sleep(1)
+    time.sleep(random.randint(1,2))
 
 def doubleclick(udid,x,y,Tag="None"):
     print(f"{udid} vua click vao {Tag}")

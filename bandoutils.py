@@ -22,14 +22,14 @@ def chiaO(crop,trang):
             center_y = y1 + 48 // 2
             if(row==5):
                 center_y=center_y+10
-            listO.append(((529+center_x,center_y+93), crop[y1:y2, x1:x2]))#tọa độ trung điểm và ảnh
+            listO.append(((500+center_x,center_y+50), crop[y1:y2, x1:x2]))#tọa độ trung điểm và ảnh
             # print(f"{row} {col} {x1} {y1} {x2} {y2}")
     return listO
 
 
 def getOHasItems(screen_capture,trang):
-    fulldo=screen_capture[90:421,526:805]
-    otrong = chiaO(cv2.imread("image\\fulltrong.png"),trang)
+    fulldo=screen_capture[50:363,499:761]
+    otrong = chiaO(cv2.imread("image\\fullotrong.png"),trang)
     ofulldo=chiaO(fulldo,trang)
     different_cells = []
     for i,v in enumerate(ofulldo):
@@ -45,8 +45,8 @@ def getOHasItems(screen_capture,trang):
 def get_cell_center(index, num_cols=5, cell_size=48):
     row = (index - 1) // num_cols
     col = (index - 1) % num_cols
-    x = 529+col * cell_size + cell_size / 2+col*5
-    y =93+ row * cell_size + cell_size / 2+row*5
+    x = 500+col * cell_size + cell_size / 2+col*5
+    y =50+ row * cell_size + cell_size / 2+row*5
     return (x, y)
 
 
@@ -66,3 +66,4 @@ def loc_cac_o_can_bam(origin_list_has_item,listcg,trang):
 # print(loc_cac_o_can_bam([19],1))
 # for i in (loc_cac_o_can_bam([8  ],1)):
 #     click("emulator-5554",i[0],i[1])
+from adb import *
