@@ -77,10 +77,10 @@ def auth(key):
         # }
         #banmoi
         license_keys = {
-            "hsr": datetime.date(2025, 11, 22),   # 30 days from Oct 23, 2025
-            "qqq": datetime.date(2025, 11, 27),   # 30 days from Oct 28, 2025
-            "ưgj": datetime.date(2025, 10, 21),   # 30 days from Sep 21, 2025
-            "h54": datetime.date(2025, 11, 25),   # 30 days from Oct 26, 2025
+            "hsr": datetime.date(2025, 11, 30),   # 30 days from Oct 23, 2025
+            "qqq": datetime.date(2025, 11, 30),   # 30 days from Oct 28, 2025
+            "ưgj": datetime.date(2025, 10, 30),   # 30 days from Sep 21, 2025
+            "h54": datetime.date(2025, 12, 15),   # 30 days from Oct 26, 2025
             "oip": datetime.date(2025, 12, 30),   # 30 days from Nov 30, 2025
             "4th": datetime.date(2026, 2, 3),     # 30 days from Jan 4, 2026
             "vbn": datetime.date(2026, 3, 10),    # 30 days from Feb 8, 2026

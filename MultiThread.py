@@ -2,6 +2,11 @@ from struct import pack
 from main import *
 from PyQt5.QtCore import QThread
 from file import *
+from logger_config import setup_logging
+
+# Setup logging for the project
+logger = setup_logging()
+
 tools=[]
 threads=[]
 
@@ -46,7 +51,8 @@ def resetLD(devices):
                 y = int(values[i+1])
                 coordinates.append([x, y])
             
-        except:
+        except Exception as e:
+            logger.error(f"Error processing device {v}: {str(e)}", exc_info=True)
             coordinates=[[300,500]]
             tkmk=("A","B")
             print(f"chua co toa do may {v}  ")

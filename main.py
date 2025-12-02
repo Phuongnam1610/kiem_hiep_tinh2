@@ -2,8 +2,13 @@ from adb import *
 from bandoutils import *
 import numpy as np
 from ocr import *
-pkgame="com.gbc.jx2mobile.net"
-pkgame2="com.gbc.jx2mobile.net/org.cocos2dx.cpp.AppActivity"
+from logger_config import setup_logging
+
+# Setup logging
+setup_logging()
+
+pkgame="com.tepaylink.kiemhieptinh2mobile"
+pkgame2="com.tepaylink.kiemhieptinh2mobile/org.cocos2dx.cpp.AppActivity"
 
 def cam(img):
     """
@@ -827,9 +832,9 @@ class toolLQ():
                 # 3 la so lan quet tren man hinh
                 # 1 la click vao nut neu thay , 0 la ko click
                 # !=0 tuc la tim thay 
-                if (findFor(self.udid, 3, "batdau.png",1 )!= 0):
+                if (findFor(self.udid, 3, "dangnhap.png",1 )!= 0):
                     time.sleep(3)
-                    if (findFor(self.udid, 15, "batdau2.png",1 )!= 0):
+                    if (findFor(self.udid, 15, "batdau.png",1 )!= 0):
                         time.sleep(10)
                         findFor(self.udid,5,"roikhoi.png",threshold=0.8)
                         self.tatNutX()
@@ -839,9 +844,9 @@ class toolLQ():
                        
                                
         except Exception as e:
-            logging.error(e)
+            logging.error(f"Error in main loop: {str(e)}", exc_info=True)
     def test(self):
-        self.vDL()
+        self.giamdinh()
 
 # a=toolLQ("emulator-5554",((405 ,369 ),(749 ,151),( 479 ,444 ),(203 ,180)),("A","B"),(479 ,444))
 # a.test()
