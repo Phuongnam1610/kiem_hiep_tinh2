@@ -48,11 +48,10 @@ def cam(img):
             
     return found
 class toolLQ():
-    def __init__(self,udid,index,packtk,toaDo):
+    def __init__(self,udid,index,packtk):
         self.udid=udid    
         self.index=index
         self.packtk=packtk
-        self.toaDo=toaDo
     
 
     def loadgame(self):
@@ -337,14 +336,11 @@ class toolLQ():
         for i in range(2):
             click(self.udid, 856,110 ,"map")
 
-            if (findFor(self.udid, 5, "pmd2.png", 0,threshold=0.85)== 0):
-                if (findFor(self.udid, 5, "thegioi.png", 1)!= 0):
-                    click(self.udid, 330,316,"thanh do")
-                    click(self.udid, 217, 478,"nam thanh do")
-                    click(self.udid, 854, 505,"giang tan thon")
-                    click(self.udid, 289, 500,"phong ma dong")
-                
-            click(self.udid, self.toaDo[0],self.toaDo[1],"toado")
+            findFor(self.udid, 5, "thegioi.png", 1)
+            for i,v in enumerate(self.index):
+                print(v[0],v[1])
+                click(self.udid,v[0],v[1])
+                time.sleep(1)                
             self.dungdi()
             time.sleep(2)
             self.tatNutX()
@@ -701,14 +697,24 @@ class toolLQ():
     def train(self):
         start_time = time.time()
         timebuff=time.time()
-        checkTreo =0
+        check_image_time = time.time() - 200 # Ensure we capture the first image immediately
+        last_image = None
         while True:
-            if(checkTreo==2):
-                break
-            currentImage=screen_capture(self.udid)[226:428, 392: 703]
-            
-            # Kiểm tra thời gian hiện tại
+           
             current_time = time.time()
+            
+            # Check for freeze every 3 minutes
+            if current_time - check_image_time >= 180:
+                current_image = screen_capture(self.udid)
+                if last_image is not None:
+                    # If images are identical, game is likely frozen
+                    if np.array_equal(current_image, last_image):
+                        print("Game detected frozen (image unchanged for 3 mins). Breaking.")
+                        logging.info("Game detected frozen (image unchanged for 3 mins). Breaking.")
+                        break
+                last_image = current_image
+                check_image_time = current_time
+
             # Tính thời gian đã trôi qua
             elapsed_time = current_time - start_time
             elapsed_timebuff=current_time - timebuff
@@ -742,11 +748,7 @@ class toolLQ():
                                 self.batauto()
                     else:
                         break
-            afterImage=screen_capture(self.udid)[226:428, 392: 703]
-            if(find3(afterImage,currentImage)==0):
-                checkTreo+=1
-            else:
-                checkTreo=0   
+          
                    
             time.sleep(120)
             
@@ -837,6 +839,7 @@ class toolLQ():
                     if (findFor(self.udid, 15, "batdau.png",1 )!= 0):
                         time.sleep(10)
                         findFor(self.udid,5,"roikhoi.png",threshold=0.8)
+                        click(self.udid,306,411)
                         self.tatNutX()
                         if(self.lenbai()==True):
                             if(self.batauto()==True):
@@ -848,5 +851,5 @@ class toolLQ():
     def test(self):
         self.giamdinh()
 
-# a=toolLQ("emulator-5554",((405 ,369 ),(749 ,151),( 479 ,444 ),(203 ,180)),("A","B"),(479 ,444))
+# a=toolLQ("emulator-5554",((707 ,194 ),(201 ,457)),("A","B"))
 # a.test()

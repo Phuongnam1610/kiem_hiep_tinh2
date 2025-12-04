@@ -1,4 +1,7 @@
 .
 adb
 h54
-0.65
+0.6
+C:\LDPlayer\LDPlayer9\ldconsole.exe
+36
+a

@@ -6,7 +6,8 @@ import subprocess
 import os
 import logging
 import os
-import requests,datetime
+import datetime
+import requests
 import random
 # Tạo thư mục logs nếu chưa có
 if not os.path.exists("logs"):
@@ -77,17 +78,17 @@ def auth(key):
         # }
         #banmoi
         license_keys = {
-            "hsr": datetime.date(2025, 11, 30),   # 30 days from Oct 23, 2025
-            "qqq": datetime.date(2025, 11, 30),   # 30 days from Oct 28, 2025
-            "ưgj": datetime.date(2025, 10, 30),   # 30 days from Sep 21, 2025
-            "h54": datetime.date(2025, 12, 15),   # 30 days from Oct 26, 2025
-            "oip": datetime.date(2025, 12, 30),   # 30 days from Nov 30, 2025
-            "4th": datetime.date(2026, 2, 3),     # 30 days from Jan 4, 2026
-            "vbn": datetime.date(2026, 3, 10),    # 30 days from Feb 8, 2026
-            "xzx": datetime.date(2026, 4, 14),    # 30 days from Mar 15, 2026
-            "ert": datetime.date(2026, 5, 19),    # 30 days from Apr 19, 2026
-            "q23": datetime.date(2026, 6, 23),    # 30 days from May 24, 2026
-            "poi": datetime.date(2026, 7, 28)     # 30 days from June 28, 2026
+            "hsr": datetime.date(2025, 7, 13),
+            "qqq": datetime.date(2025, 9, 15),    # 35 days from July 13
+            "uid": datetime.date(2025, 9, 15),    # 35 days from Aug 17 
+            "hpo": datetime.date(2025, 12, 13),   # 35 days from Sept 21
+            "oip": datetime.date(2025, 12, 13),   # 35 days from Oct 26
+            "h54": datetime.date(2026, 1, 4),     # 35 days from Nov 30
+            "vbn": datetime.date(2026, 2, 8),     # 35 days from Jan 4
+            "xzx": datetime.date(2026, 3, 15),    # 35 days from Feb 8
+            "ert": datetime.date(2026, 4, 19),    # 35 days from Mar 15
+            "qxx": datetime.date(2026, 5, 24),    # 35 days from Apr 19
+            "poi": datetime.date(2026, 6, 28)     # 35 days from May 24
         }
         #Cam2
         # license_keys = {
@@ -194,19 +195,32 @@ def clearData(img):
     command=f"{adb} -s {udid} shell am start -n {package}"
 
 
-def restartLD():
+def restartLD(somayld):
     a=[]
     while True:
         command=f"{ld} quitall"
         subprocess.run(command, creationflags = subprocess.CREATE_NO_WINDOW,shell=True)
-        for i in range(u):
+        time.sleep(20)
+        for i in range(somayld):
+            print(f"bat may {(i+1)}")
             command=f"{ld} launch --index {(i+1)}"
             subprocess.run(command, creationflags = subprocess.CREATE_NO_WINDOW,shell=True)
-            time.sleep(1)
-        time.sleep(50)
+            time.sleep(12)
+            # if(i==20):
+            #     time.sleep(60)
+        time.sleep(120)
         for i in range(10):
+            command=f"adb kill-server"
+            
+            subprocess.run(command, creationflags = subprocess.CREATE_NO_WINDOW,shell=True)
+            time.sleep(5)
             a=get_connected_devices()
-            if(len(a)==u):
+            time.sleep(2)
+            a=get_connected_devices()
+            time.sleep(2)
+            a=get_connected_devices()
+            print(a)
+            if(len(a)==somayld):
                 
                 return a
 def quetChuEn(img):
@@ -235,7 +249,7 @@ def click(udid,x,y,Tag="None"):
 
     command = f"{adb} -s {udid} shell input tap {x} {y}"
     os.system(command)
-    time.sleep(random.randint(1,2))
+    time.sleep(1)
 
 def doubleclick(udid,x,y,Tag="None"):
     print(f"{udid} vua click vao {Tag}")
@@ -254,6 +268,11 @@ def clickhold(udid,x,y,delay=200):
 
 def sendtext(udid, g):
     command = f"{adb} -s {udid} shell input text \'{g}\'"
+    os.system(command)
+    time.sleep(1)
+
+def setTiengViet(udid):
+    command=f"{adb} -s {udid} shell setprop persist.sys.locale vi-VN; setprop persist.sys.language vi; setprop persist.sys.country VN; stop; start"
     os.system(command)
     
 def find(udid, img='', threshold=0.95):
@@ -326,12 +345,12 @@ def find2(img2, img1,udid=False,a=0,b=0,threshold=0.95):
     # cv2.imshow('Matches', img2)  
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
-    if(udid!=False):
-        print(f'phat hien anh {img1}')
-        logging.info(f'phat hien anh {img1}')
+    # if(udid!=False):
+    #     print(f'phat hien anh {img1}')
+    #     logging.info(f'phat hien anh {img1}')
 
-        click(udid, points[0][0]+a,points[0][1]+b )
-        return points
+    #     click(udid, points[0][0]+a,points[0][1]+b )
+    #     return points
     
     return points
 
@@ -533,6 +552,30 @@ def findFor(udid,n=2,img="",yclick=1,time_sleep=0,threshold=0.9):
             print(f"khong phat hien anh {img}",e)
     return 0
 
+
+def findForHanhTrang(udid,n=2,img="",yclick=1,time_sleep=0,threshold=0.9):   
+    
+    print(f"{udid} dang tim {img}") 
+    logging.info(f"{udid} dang tim {img}")
+
+    for i in range(n):
+        try:
+            anh=find(udid,img,threshold)
+            if(anh!=0):
+                logging.info(f"Phat hien anh {img}")
+                print(f"Phat hien anh {img}")
+                if(yclick==1):
+                    time.sleep(time_sleep)
+                    click(udid,anh[-1][0],anh[-1][1])
+                    print(anh[-1][0],anh[-1][1])
+                    logging.info(f"Click vao {img}")
+
+                return anh
+        except Exception as e:
+            logging.error(f"khong phat hien anh {img}")
+            print(f"khong phat hien anh {img}",e)
+    return 0
+
     
 
             
@@ -615,4 +658,6 @@ adb=setting[1].strip()
 key=setting[2].strip()
 th=float(setting[3].strip())
 auth(key)
-
+ld=setting[4].strip()
+somayld=int(setting[5].strip())
+mokhoa=setting[6].strip()
